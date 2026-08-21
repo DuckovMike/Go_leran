@@ -1,37 +1,23 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
-	"net/http"
+
+	"github.com/jackc/pgx/v5"
 )
 
-type httpResponse struct {
-	Fisrt  string
-	Second string
-}
-
-func payHandler(w http.ResponseWriter, r *http.Request) {
-	fisrt := r.URL.Query().Get("f")
-	second := r.URL.Query().Get("s")
-
-	resp := httpResponse{
-		Fisrt:  fisrt,
-		Second: second,
-	}
-
-	fmt.Println(resp)
-	httpResp, err := json.Marshal(resp)
+func main() {
+	ctx := context.Context(context.Background())
+	db, err := pgx.Connect(ctx, "postgres://postgres:0604@localhost:5432/postgres")
 
 	if err != nil {
-		fmt.Println("ошибка", err)
+		panic(err)
 	}
 
-	w.Write(httpResp)
+	if err := db.Ping(ctx); err != nil {
+		panic(err)
+	}
 
-}
-
-func main() {
-	http.HandleFunc("/pay", payHandler)
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("OK")
 }

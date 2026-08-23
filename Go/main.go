@@ -1,23 +1,24 @@
 package main
 
 import (
-	"context"
-	"fmt"
-
-	"github.com/jackc/pgx/v5"
+	"encoding/json"
+	"net/http"
 )
 
+type HttpResp struct {
+	Response string
+}
+
+func helloHandle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	resp, _ := json.Marshal(HttpResp{Response: "hello"})
+	w.Write(resp)
+}
+
 func main() {
-	ctx := context.Context(context.Background())
-	db, err := pgx.Connect(ctx, "postgres://postgres:0604@localhost:5432/postgres")
+	http.HandleFunc("/hello", helloHandle)
 
-	if err != nil {
-		panic(err)
-	}
-
-	if err := db.Ping(ctx); err != nil {
-		panic(err)
-	}
-
-	fmt.Println("OK")
+	http.ListenAndServe(":8080", nil)
 }

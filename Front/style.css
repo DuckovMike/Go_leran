@@ -1,0 +1,37 @@
+body{
+    margin: 0;
+}
+
+#Header {
+    display: flex;
+    height: 5vh;
+    background: #004c97;
+    align-items: center;
+    justify-content: center;
+
+    & h1 {
+        margin: 0;
+        color: #ffffff;
+    }
+}
+
+#Main{
+    height: 90vh;
+    background: #ffffff;
+    width: 50vw;
+    margin-left: 25vw;
+}
+
+#Main #table{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#Main .days{
+    margin: 10px;
+}
+
+#Footer {
+    height: 5vh;
+    background: #004c97;
+}

@@ -3,11 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Проба пера</title>
 </head>
 <body>
-    <h1>Привет</h1>
-    <button id="btn">Нажми</button>
+    <div id="Header">
+        <h1>Табель Военмех</h1>
+    </div>
+    <div id="Main">
+        <div id="Title">
+            <section>
+                <p id="table-num">Табель №1</p>
+                <p>учета использования рабочего времени</p>
+                <label for="table-date"></label>
+                <select name="table-date" id="table-date">
+
+                </select>
+            </section>
+            
+            <section>
+                Учреждение: БГТУ "ВОЕНМЕХ" им. Д.Ф.Устинова
+            </section>
+            <section>
+                <label for="department">Структурное подразделение:</label>
+                <select name="department" id="department">
+                    <option value="1" class="dep">1</option>
+                    <option value="2" class="dep">2</option>
+                    <option value="3" class="dep">3</option>
+                    <option value="4" class="dep">4</option>
+                    <option value="5" class="dep">5</option>
+                </select>
+            </section>
+            <section>
+                <label for="table-var">Вид табеля:</label>
+                <select name="table-var" id="table-var">
+                    <option value="1" class="dep">1</option>
+                    <option value="2" class="dep">2</option>
+                    <option value="3" class="dep">3</option>
+                    <option value="4" class="dep">4</option>
+                    <option value="5" class="dep">5</option>
+                </select>
+            </section>
+        </div>
+
+        <div id="table"></div>
+    </div>
+    <div id="Footer"></div>
     <script src="script.js"></script>
 </body>
 </html>

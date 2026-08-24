@@ -5,20 +5,33 @@ const tableNum = document.getElementById('table-num')
 
 const tableVar = document.getElementById('table-var')
 
-tableVar.addEventListener('change', () => {
-    console.log(tableVar.value);
-    
-})
-
 
 const tableDate = document.getElementById('table-date')
+const tableYear = document.getElementById('table-year')
+
 const date = new Date()
-const febLastDate = new Date(date.getFullYear(), 2, 0).getDate()
+
+let year = date.getFullYear()
+
+for (let i of [-1,0,1,2]){
+    const optYr = document.createElement('option')
+    optYr.textContent = year + i
+    optYr.value = year + i
+    if (i == 0){
+        optYr.selected = true
+    }
+
+    tableYear.appendChild(optYr)
+}
+
+
+
+const febLastDate = new Date(year, 2, 0).getDate()
 const dateOptions = [
     { text: "Январь 1-15", value: 1},
     { text: "Январь 16-31", value: 2},
     { text: "Февраль 1-15", value: 3},
-    { text: `Февраль 16-${febLastDate}`, value: 4},
+    { text: `Февраль 16-${febLastDate}`, value: 4, id: 'table-date-feb'},
     { text: "Март 1-15", value: 5},
     { text: "Март 16-31", value: 6},
     { text: "Апрель 1-15", value: 7},
@@ -41,13 +54,24 @@ const dateOptions = [
     { text: "Декабрь 16-31", value: 24},
 ]
 
+
+
 for (const opt of dateOptions) {
     const optEl = document.createElement('option')
     optEl.textContent = opt.text
     optEl.value = opt.value
-
+    if ('id' in opt){
+        optEl.id = 'table-date-feb'
+    }
     tableDate.appendChild(optEl)
 }
+
+tableYear.addEventListener("change", () => {
+    const feb = document.getElementById('table-date-feb')
+    year = tableYear.value
+    const febLastDate = new Date(year, 2, 0).getDate()
+    feb.textContent = `Февраль 16-${febLastDate}`
+})
 
 tableDate.addEventListener("change", () => {
     tableNum.textContent = "Табель №" + `${tableDate.value}`
@@ -57,7 +81,7 @@ tableDate.addEventListener("change", () => {
 
 // ------------- Логика таблицы ------------- //
 
-const container = document.getElementById("table")
+const container = document.getElementById("Table")
 
 for (let i = 1; i <= 31; i++){
     const tabelcell = document.createElement('div')

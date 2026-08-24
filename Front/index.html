@@ -12,21 +12,22 @@
     </div>
     <div id="Main">
         <div id="Title">
-            <section>
+            <section id="table-num-sect">
                 <p id="table-num">Табель №1</p>
                 <p>учета использования рабочего времени</p>
                 <label for="table-date"></label>
-                <select name="table-date" id="table-date">
-
-                </select>
+                <select name="table-date" id="table-date"></select>
+                <select name="table-year" id="table-year"></select>
             </section>
             
             <section>
                 Учреждение: БГТУ "ВОЕНМЕХ" им. Д.Ф.Устинова
             </section>
+
             <section>
                 <label for="department">Структурное подразделение:</label>
                 <select name="department" id="department">
+                    <!-- Заглушка. Данные будут подтягиваться из БД-->
                     <option value="1" class="dep">1</option>
                     <option value="2" class="dep">2</option>
                     <option value="3" class="dep">3</option>
@@ -34,19 +35,23 @@
                     <option value="5" class="dep">5</option>
                 </select>
             </section>
+
             <section>
                 <label for="table-var">Вид табеля:</label>
                 <select name="table-var" id="table-var">
-                    <option value="1" class="dep">1</option>
-                    <option value="2" class="dep">2</option>
-                    <option value="3" class="dep">3</option>
-                    <option value="4" class="dep">4</option>
-                    <option value="5" class="dep">5</option>
+                    <option value="0" class="dep">0 - первичный</option>
+                    <option value="1" class="dep">1 - корректирующий</option>
+                    <option value="2" class="dep">2 - др.</option>
                 </select>
             </section>
         </div>
 
-        <div id="table"></div>
+        <div id="Table">
+            <div id="table-title">
+                <p>1</p>
+                <p>2</p>
+            </div>
+        </div>
     </div>
     <div id="Footer"></div>
     <script src="script.js"></script>

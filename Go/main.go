@@ -2,23 +2,36 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
-type HttpResp struct {
-	Response string
+type httpResponse struct {
+	Fisrt  string
+	Second string
 }
 
-func helloHandle(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	resp, _ := json.Marshal(HttpResp{Response: "hello"})
-	w.Write(resp)
+func payHandler(w http.ResponseWriter, r *http.Request) {
+	fisrt := r.URL.Query().Get("f")
+	second := r.URL.Query().Get("s")
+
+	resp := httpResponse{
+		Fisrt:  fisrt,
+		Second: second,
+	}
+
+	fmt.Println(resp)
+	httpResp, err := json.Marshal(resp)
+
+	if err != nil {
+		fmt.Println("ошибка", err)
+	}
+
+	w.Write(httpResp)
+
 }
 
 func main() {
-	http.HandleFunc("/hello", helloHandle)
-
+	http.HandleFunc("/pay", payHandler)
 	http.ListenAndServe(":8080", nil)
 }

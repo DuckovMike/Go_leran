@@ -93,7 +93,6 @@ tableNums.style.gridTemplateColumns = `repeat(15, 1fr)`
 for (let i = 1; i <= 15; i++){
     const tabelcell = document.createElement('div')
     tabelcell.textContent = i
-    tabelcell.id = `day-${i}`
     tabelcell.className = "tabel-day-title"
     tableDates.appendChild(tabelcell)
 
@@ -135,7 +134,7 @@ tableDate.addEventListener('change', ()=>{
             const tabelnum = document.createElement('div')
             
             tabelcell.textContent = i
-            tabelcell.className = "days"
+            tabelcell.className = "tabel-day-title"
             tableDates.appendChild(tabelcell)
 
             tabelnum.textContent = i + 6

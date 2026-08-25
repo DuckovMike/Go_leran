@@ -3,6 +3,10 @@
     font-family: "Montserrat";
 }
 
+p{
+    margin: 0;
+}
+
 body{
     margin: 0;
 }
@@ -47,14 +51,53 @@ body{
 #Main #Table{
     display: flex;
     flex-wrap: wrap;
+    width: clamp(700px, 80%, 1440px);
 }
 
 #Main #Table #table-title{
     width: 100%;
-    height: 10vh;
+    height: 15vh;
     display: grid;
-    grid-template: 1vh/ 1fr min-content;
+    grid-template-areas:"i t" "i n" "i a";
+    grid-template-columns: 2fr 4fr;
+    grid-template-rows: repeat(3, 1fr);
+    border: 1px solid black;
+    justify-items: center;
+
+    #table-info-title{
+        grid-area: i;
+        display: grid;
+        grid-template-areas: 
+        "n fio uchNum uchNum prof" 
+        "n fio uchNum1 uchNum2 prof" 
+        "a1 a2 a3 a4 a5";
+        
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+    
+    }
+
+    #table-text-title{
+        grid-area: t;
+    }
+
+    #table-dates-title{
+        width: 100%;
+        display: grid;
+        text-align: center;
+        align-items: center;
+    }
+    
+    #table-nums-title{
+        width: 100%;
+        display: grid;
+        text-align: center;
+        align-items: center;
+    }
 }
+
+
 
 #Main .days{
     margin: 10px;

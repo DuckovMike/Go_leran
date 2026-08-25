@@ -2,11 +2,10 @@
 
 const tableNum = document.getElementById('table-num')
 
-
 const tableVar = document.getElementById('table-var')
 
-
 const tableDate = document.getElementById('table-date')
+
 const tableYear = document.getElementById('table-year')
 
 const date = new Date()
@@ -26,7 +25,8 @@ for (let i of [-1,0,1,2]){
 
 
 
-const febLastDate = new Date(year, 2, 0).getDate()
+let febLastDate = new Date(year, 2, 0).getDate()
+
 const dateOptions = [
     { text: "Январь 1-15", value: 1},
     { text: "Январь 16-31", value: 2},
@@ -55,7 +55,6 @@ const dateOptions = [
 ]
 
 
-
 for (const opt of dateOptions) {
     const optEl = document.createElement('option')
     optEl.textContent = opt.text
@@ -69,7 +68,7 @@ for (const opt of dateOptions) {
 tableYear.addEventListener("change", () => {
     const feb = document.getElementById('table-date-feb')
     year = tableYear.value
-    const febLastDate = new Date(year, 2, 0).getDate()
+    febLastDate = new Date(year, 2, 0).getDate()
     feb.textContent = `Февраль 16-${febLastDate}`
 })
 
@@ -81,13 +80,67 @@ tableDate.addEventListener("change", () => {
 
 // ------------- Логика таблицы ------------- //
 
-const container = document.getElementById("Table")
+// Начальная генерация таблицы
+const tableDates = document.getElementById("table-dates-title")
 
-for (let i = 1; i <= 31; i++){
+const tableNums = document.getElementById("table-nums-title")
+
+let dayCells = 15
+
+tableDates.style.gridTemplateColumns = 'repeat(15, 1fr)'
+tableNums.style.gridTemplateColumns = `repeat(15, 1fr)`
+
+for (let i = 1; i <= 15; i++){
     const tabelcell = document.createElement('div')
     tabelcell.textContent = i
     tabelcell.id = `day-${i}`
-    tabelcell.className = "days"
+    tabelcell.className = "tabel-day-title"
+    tableDates.appendChild(tabelcell)
 
-    container.appendChild(tabelcell)
+    const tabelnum = document.createElement('div')
+    tabelnum.textContent = i + 6
+    tabelnum.className = "tabel-num-title"
+    tableNums.appendChild(tabelnum)
 }
+
+// Обноваление дат и цифр в таблице при изменении месяца и/или его части
+tableDate.addEventListener('change', ()=>{
+    tableDates.innerHTML = ''
+    tableNums.innerHTML = ''
+
+    if (tableDate.value % 2 != 0) {
+        tableDates.style.gridTemplateColumns = `repeat(${15}, 1fr)`
+        tableNums.style.gridTemplateColumns = `repeat(${15}, 1fr)`
+
+        for (let i = 1; i <= 15; i++) {
+            const tabelcell = document.createElement('div')
+            const tabelnum = document.createElement('div')
+            
+            tabelcell.textContent = i
+            tabelcell.className = "tabel-day-title"
+            tableDates.appendChild(tabelcell)
+
+            tabelnum.textContent = i + 5
+            tabelnum.className = "tabel-num-title"
+            tableNums.appendChild(tabelnum)
+        }
+    } else {
+        dayCells = new Date(year, tableDate.value/2, 0).getDate() - 15
+        
+        tableDates.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
+        tableNums.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
+
+        for (let i = 16; i <= dayCells + 15; i++) {
+            const tabelcell = document.createElement('div')
+            const tabelnum = document.createElement('div')
+            
+            tabelcell.textContent = i
+            tabelcell.className = "days"
+            tableDates.appendChild(tabelcell)
+
+            tabelnum.textContent = i + 6
+            tabelnum.className = "tabel-num-title"
+            tableNums.appendChild(tabelnum)
+        }
+    }
+})

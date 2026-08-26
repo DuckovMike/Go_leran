@@ -47,36 +47,44 @@
         </div>
 
         <div id="Table">
-            <div id="table-title">
-                <section id="table-info-title">
-                    <div style="grid-area: n;">№</div>
-                    <div style="grid-area: fio;">Фамилия, имя, отчество</div>
-                    <div style="grid-area: uchNum;">Учетный номер</div>
-                    <div style="grid-area: prof;">Должность (профессия)</div>
-                    <div style="grid-area: uchNum1;"></div>
-                    <div style="grid-area: uchNum2;"></div>
-                    <!--  Цифры из таблицы, лениво вставлено, согласен  -->
-                    <div style="grid-area: a1;">1</div>
-                    <div style="grid-area: a2;">2</div>
-                    <div style="grid-area: a3;">3</div>
-                    <div style="grid-area: a4;">4</div>
-                    <div style="grid-area: a5;">5</div>
+            <section id="Table-title">
+                <div style="grid-area: num; width: 1em;">№</div>
+                <div style="grid-area: fio;">Фамилия, имя отчество</div>
+                <div style="grid-area: accNum;">Учетный номер</div>
+                <div style="grid-area: space1;"></div>
+                <div style="grid-area: space2;"></div>
+                <div style="grid-area: prof;">Должность (профессия)</div>
+                <div style="grid-area: n1; width: 1em;">1</div>
+                <div style="grid-area: n2;">2</div>
+                <div style="grid-area: n3;">3</div>
+                <div style="grid-area: n4;">4</div>
+                <div style="grid-area: n5;">5</div>
+                <section id="Table-AllDates-title">
+                    <div>Числа месяца</div>
+                    <section id="Table-dates-title"></section>
+                    <section id="Table-nums-title"></section>
                 </section>
-                <section id="table-text-title">
-                    <p>Тут "числа месяца"</p>
-                </section>
-                <section id="table-dates-title">
-                    <!--Тут js вставляет все даты в зависимости от выбранного месяца и его части-->
-                </section>
-                <section id="table-nums-title"></section>
-                <section id="table-result-title">
-                    <div id="table-resultT-title">dfdf</div>
+                <section id="Table-result-title">
+                    <div id="Table-resultT-title">"Итого дней (часов) явок (неявок) с 1 по 15"</div>
                     <div>21</div>
                 </section>
-            </div>
+            </section>
+
+            <section id="Table-Workers-info">
+                <div style="grid-area: num;">1</div>
+                <div style="grid-area: fio;">Иванов Иван Иванович</div>
+                <div style="grid-area: accNum1;"></div>
+                <div style="grid-area: accNum2;"></div>
+                <div style="grid-area: prof;">Должность</div>
+                <div style="grid-area: rate;">1</div>
+                <section style="grid-area: dates;"></section>
+                <div style="grid-area: res;">1</div>
+            </section>
         </div>
     </div>
-    <div id="Footer"></div>
+</div>
+
+<div id="Footer"></div>
     <script src="script.js"></script>
 </body>
 </html>

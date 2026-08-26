@@ -49,100 +49,60 @@ body{
 }
 
 #Main #Table{
-    display: flex;
-    flex-wrap: wrap;
-    width: clamp(700px, 80%, 1440px);
-}
-
-#Main #Table #table-title{
-    width: 100%;
-    height: 15vh;
-    display: grid;
-    grid-template-areas:
-    "i t s" 
-    "i n s" 
-    "i a s";
-    grid-template-columns: 4fr 8fr 1fr;
-    grid-template-rows: repeat(3, 1fr);
-    border: 1px solid black;
-    justify-items: center;
+    width: clamp(700px, 80%, 2000px);
     
     div{
+        width: 100%;
+        
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
         border: 1px solid black;
     }
-
-    #table-info-title{
-        grid-area: i;
-        display: grid;
-        grid-template-areas: 
-        "n fio uchNum uchNum prof" 
-        "n fio uchNum1 uchNum2 prof" 
-        "a1 a2 a3 a4 a5";
-        
-        align-items: center;
-        justify-items: center;
-        text-align: center;
-
-        div{
-            display: flex;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-
-        }
-    }
-
-    #table-text-title{
-        grid-area: t;
-        display: flex;
-        align-items: center;
-        
-    }
-
-    #table-dates-title{
-        grid-area: n;
-        width: 100%;
-        display: grid;
-        text-align: center;
-        align-items: center;
-        border-top: 1px solid black;
-    }
     
-    #table-nums-title{
-        grid-area: a;
+    #Table-title{
+        margin-top: 5em;
         width: 100%;
         display: grid;
-        text-align: center;
-        align-items: center;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-    }
+        grid-template: 
+        "num fio accNum accNum prof dates res"
+        "num fio space1 space2 prof dates res"
+        "n1 n2 n3 n4 n5 dates res";
 
-    .tabel-num-title, .tabel-day-title{
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: center;
-        border-left: 1px solid #000;
-    }
+        grid-template-rows: 2fr 2fr 1fr;
+        grid-template-columns: 1em 8em 4em 4em 8em 50em 8em;
 
-    #table-result-title{
-        width: 100%;
-        grid-area: s;
-        display: grid;
-        grid-template-rows: 2fr 1fr;
+
         
-        div{
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid black;
-            border-left: 1px solid black;
+        #Table-AllDates-title{
+            grid-area: dates;
+            display: grid;
+            grid-template-rows: inherit;
+        
+            #Table-dates-title{
+                display: grid;
+            }
+        
+            #Table-nums-title{
+                display: grid;
+            }
         }
+
+        #Table-result-title{
+            grid-area: res;
+    
+            display: grid;
+            grid-template-rows: 4fr 1fr;
+        }
+    }
+
+    #Table-Workers-info{
+        display: grid;
+        grid-template: 
+        "num fio accNum1 accNum2 prof dates res"
+        "num fio accNum1 accNum2 rate dates res";
+        grid-template-columns: 1em 8em 4em 4em 8em 50em 8em;
     }
 }
 

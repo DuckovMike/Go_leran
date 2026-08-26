@@ -1,30 +1,22 @@
 // ------------- Логика заголовка ------------- //
 
+function createUser(fio, profesion, rate, appearence){
+    return {
+        fio: fio,
+        profesion: profesion,
+        rate: rate,
+        appearence: appearence
+    }
+
+}
+
 const tableNum = document.getElementById('table-num')
-
 const tableVar = document.getElementById('table-var')
-
 const tableDate = document.getElementById('table-date')
-
 const tableYear = document.getElementById('table-year')
-
 const date = new Date()
 
 let year = date.getFullYear()
-
-for (let i of [-1,0,1,2]){
-    const optYr = document.createElement('option')
-    optYr.textContent = year + i
-    optYr.value = year + i
-    if (i == 0){
-        optYr.selected = true
-    }
-
-    tableYear.appendChild(optYr)
-}
-
-
-
 let febLastDate = new Date(year, 2, 0).getDate()
 
 const dateOptions = [
@@ -53,6 +45,20 @@ const dateOptions = [
     { text: "Декабрь 1-15", value: 23},
     { text: "Декабрь 16-31", value: 24},
 ]
+
+for (let i of [-1,0,1,2]){
+    const optYr = document.createElement('option')
+    optYr.textContent = year + i
+    optYr.value = year + i
+    if (i == 0){
+        optYr.selected = true
+    }
+
+    tableYear.appendChild(optYr)
+}
+
+
+
 
 
 for (const opt of dateOptions) {
@@ -97,7 +103,7 @@ for (let i = 1; i <= 15; i++){
     tableDates.appendChild(tabelcell)
 
     const tabelnum = document.createElement('div')
-    tabelnum.textContent = i + 6
+    tabelnum.textContent = i + 5
     tabelnum.className = "tabel-num-title"
     tableNums.appendChild(tabelnum)
 }

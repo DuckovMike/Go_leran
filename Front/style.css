@@ -59,13 +59,17 @@ body{
     height: 15vh;
     display: grid;
     grid-template-areas:
-    "i t" 
-    "i n" 
-    "i a";
-    grid-template-columns: 2fr 4fr;
+    "i t s" 
+    "i n s" 
+    "i a s";
+    grid-template-columns: 4fr 8fr 1fr;
     grid-template-rows: repeat(3, 1fr);
     border: 1px solid black;
     justify-items: center;
+    
+    div{
+        border: 1px solid black;
+    }
 
     #table-info-title{
         grid-area: i;
@@ -99,6 +103,7 @@ body{
     }
 
     #table-dates-title{
+        grid-area: n;
         width: 100%;
         display: grid;
         text-align: center;
@@ -107,6 +112,7 @@ body{
     }
     
     #table-nums-title{
+        grid-area: a;
         width: 100%;
         display: grid;
         text-align: center;
@@ -121,6 +127,22 @@ body{
         align-items: center;
         justify-content: center;
         border-left: 1px solid #000;
+    }
+
+    #table-result-title{
+        width: 100%;
+        grid-area: s;
+        display: grid;
+        grid-template-rows: 2fr 1fr;
+        
+        div{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid black;
+            border-left: 1px solid black;
+        }
     }
 }
 

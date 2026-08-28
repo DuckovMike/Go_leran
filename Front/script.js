@@ -7,8 +7,21 @@ function createUser(fio, profesion, rate, appearence){
         rate: rate,
         appearence: appearence
     }
-
 }
+
+function createAppearence(year, month, part){
+    const dict = {}
+    const fisrtDate = part == 1 ? 1 : 16
+    const endDate = part == 1 ? 15: new Date(year, month, 0).getDate()
+
+    for (let date = fisrtDate; date <= endDate; date++){
+        dict[String(date)] = new Date(year, month, date).getDay()
+    }
+    
+    return{dict}
+}
+
+console.log(createAppearence(2026, 1, 1));
 
 const tableNum = document.getElementById('table-num')
 const tableVar = document.getElementById('table-var')
@@ -46,7 +59,7 @@ const dateOptions = [
     { text: "Декабрь 16-31", value: 24},
 ]
 
-for (let i of [-1,0,1,2]){
+for (let i of [-1,0,1,2]) {
     const optYr = document.createElement('option')
     optYr.textContent = year + i
     optYr.value = year + i
@@ -56,10 +69,6 @@ for (let i of [-1,0,1,2]){
 
     tableYear.appendChild(optYr)
 }
-
-
-
-
 
 for (const opt of dateOptions) {
     const optEl = document.createElement('option')
@@ -151,3 +160,15 @@ tableDate.addEventListener('change', ()=>{
         }
     }
 })
+
+const workerDatesCell = document.getElementById("Table-Worker-dates")
+for (let i = 1; i <=15; i++) {
+    const datek = document.createElement('div')
+    const datev = document.createElement('div')
+    
+    datek.textContent = i
+    datev.textContent = "y"
+    
+    workerDatesCell.appendChild(datek)
+    workerDatesCell.appendChild(datev)
+}

@@ -103,6 +103,14 @@ body{
         "num fio accNum1 accNum2 prof dates res"
         "num fio accNum1 accNum2 rate dates res";
         grid-template-columns: 1em 8em 4em 4em 8em 50em 8em;
+
+        #Table-Worker-dates{
+            grid-area: dates;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: repeat(15, 1fr);
+            grid-auto-flow: column;
+        }
     }
 }
 

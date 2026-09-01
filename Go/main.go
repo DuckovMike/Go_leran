@@ -1,37 +1,13 @@
 package main
 
 import (
-	"encoding/json"
+	"Go/models"
 	"fmt"
-	"net/http"
 )
 
-type httpResponse struct {
-	Fisrt  string
-	Second string
-}
-
-func payHandler(w http.ResponseWriter, r *http.Request) {
-	fisrt := r.URL.Query().Get("f")
-	second := r.URL.Query().Get("s")
-
-	resp := httpResponse{
-		Fisrt:  fisrt,
-		Second: second,
-	}
-
-	fmt.Println(resp)
-	httpResp, err := json.Marshal(resp)
-
-	if err != nil {
-		fmt.Println("ошибка", err)
-	}
-
-	w.Write(httpResp)
-
-}
-
 func main() {
-	http.HandleFunc("/pay", payHandler)
-	http.ListenAndServe(":8080", nil)
+	u1 := models.CreateUser(1, "Misha", "Ingenier", 0.5)
+	u1.CreateDefaultAppearence(2026, 1, 1)
+
+	fmt.Println(u1)
 }

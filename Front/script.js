@@ -23,15 +23,21 @@ function createAppearence(year, month, part){
 
 console.log(createAppearence(2026, 1, 1));
 
+// Константы для хранения элементов заголовка (Номер таблицы, Даты отчета,)
 const tableNum = document.getElementById('table-num')
-const tableVar = document.getElementById('table-var')
 const tableDate = document.getElementById('table-date')
 const tableYear = document.getElementById('table-year')
+
+// Сегодняшняя дата и время
 const date = new Date()
 
+// Переменная для хранения года
 let year = date.getFullYear()
+
+// Переменная для слежки за последней датой февраля
 let febLastDate = new Date(year, 2, 0).getDate()
 
+// Константы для выбора месяца и его части
 const dateOptions = [
     { text: "Январь 1-15", value: 1},
     { text: "Январь 16-31", value: 2},
@@ -59,6 +65,7 @@ const dateOptions = [
     { text: "Декабрь 16-31", value: 24},
 ]
 
+// Создание опций для выбора года
 for (let i of [-1,0,1,2]) {
     const optYr = document.createElement('option')
     optYr.textContent = year + i
@@ -162,6 +169,10 @@ tableDate.addEventListener('change', ()=>{
 })
 
 const workerDatesCell = document.getElementById("Table-Worker-dates")
+workerDatesCell.style.gridTemplateColumns = "repeat(15, 1fr)"
+
+let defaultAppearence = createAppearence(year, date)
+
 for (let i = 1; i <=15; i++) {
     const datek = document.createElement('div')
     const datev = document.createElement('div')
@@ -172,3 +183,32 @@ for (let i = 1; i <=15; i++) {
     workerDatesCell.appendChild(datek)
     workerDatesCell.appendChild(datev)
 }
+
+tableDate.addEventListener('change', ()=>{
+    workerDatesCell.innerHTML = ''
+    if (tableDate.value % 2 != 0) {
+        workerDatesCell.style.gridTemplateColumns = "repeat(15, 1fr)"
+        for (let i = 1; i <=15; i++) {
+            const datek = document.createElement('div')
+            const datev = document.createElement('div')
+            
+            datek.textContent = i
+            datev.textContent = "y"
+            
+            workerDatesCell.appendChild(datek)
+            workerDatesCell.appendChild(datev)
+        }
+    } else {
+        workerDatesCell.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
+        for (let i = 16; i <=dayCells + 15; i++) {
+            const datek = document.createElement('div')
+            const datev = document.createElement('div')
+            
+            datek.textContent = i
+            datev.textContent = "y"
+            
+            workerDatesCell.appendChild(datek)
+            workerDatesCell.appendChild(datev)
+        }
+    }
+})

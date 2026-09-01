@@ -106,6 +106,7 @@ tableDate.addEventListener("change", () => {
 const tableDates = document.getElementById("Table-dates-title")
 const tableRes = document.getElementById("Table-resultT-title")
 const tableNums = document.getElementById("Table-nums-title")
+const tableResNum = document.getElementById("Table-result-num")
 
 let dayCells = 15
 
@@ -128,11 +129,14 @@ for (let i = 1; i <= 15; i++){
 tableDate.addEventListener('change', ()=>{
     tableDates.innerHTML = ''
     tableNums.innerHTML = ''
+    tableResNum.innerHTML = ''
+
 
     if (tableDate.value % 2 != 0) {
         tableDates.style.gridTemplateColumns = `repeat(${15}, 1fr)`
         tableNums.style.gridTemplateColumns = `repeat(${15}, 1fr)`
         tableRes.textContent = "Итого дней(часов) явок(неявок) с 1 по 15"
+        tableResNum.textContent = 21
 
         for (let i = 1; i <= 15; i++) {
             const tabelcell = document.createElement('div')
@@ -152,6 +156,7 @@ tableDate.addEventListener('change', ()=>{
         tableDates.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
         tableNums.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
         tableRes.textContent = "Всего дней (часов) явок (неявок) за месяц"
+        tableResNum.textContent = 22 + dayCells
 
         for (let i = 16; i <= dayCells + 15; i++) {
             const tabelcell = document.createElement('div')

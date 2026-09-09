@@ -21,7 +21,17 @@ function createAppearence(year, month, part){
     return{dict}
 }
 
-console.log(createAppearence(2026, 1, 1));
+function addOpts(start, end, optList, parent){
+    for (let i = start; i < end; i++) {
+        const opt = document.createElement('option')
+        const element = optList[i];
+        opt.value = i
+        opt.innerText = element
+
+        parent.appendChild(opt)
+    }
+}
+
 
 // Константы для хранения элементов заголовка (Номер таблицы, Даты отчета,)
 const tableNum = document.getElementById('table-num')
@@ -178,15 +188,19 @@ workerDatesCell.style.gridTemplateColumns = "repeat(15, 1fr)"
 
 let defaultAppearence = createAppearence(year, date)
 
+const listTypes = ["В","П","О","Б","Н","К","Х"]
+
 for (let i = 1; i <=15; i++) {
+    
     const datek = document.createElement('div')
-    const datev = document.createElement('div')
+    const datev = document.createElement('select')
     
     datek.textContent = i
-    datev.textContent = "y"
     
     workerDatesCell.appendChild(datek)
     workerDatesCell.appendChild(datev)
+
+    addOpts(0, listTypes.length, listTypes, datev)
 }
 
 tableDate.addEventListener('change', ()=>{
@@ -195,25 +209,27 @@ tableDate.addEventListener('change', ()=>{
         workerDatesCell.style.gridTemplateColumns = "repeat(15, 1fr)"
         for (let i = 1; i <=15; i++) {
             const datek = document.createElement('div')
-            const datev = document.createElement('div')
+            const datev = document.createElement('select')
             
             datek.textContent = i
-            datev.textContent = "y"
             
             workerDatesCell.appendChild(datek)
             workerDatesCell.appendChild(datev)
+
+            addOpts(0, listTypes.length, listTypes, datev)
         }
     } else {
         workerDatesCell.style.gridTemplateColumns = `repeat(${dayCells}, 1fr)`
         for (let i = 16; i <=dayCells + 15; i++) {
             const datek = document.createElement('div')
-            const datev = document.createElement('div')
+            const datev = document.createElement('select')
             
             datek.textContent = i
-            datev.textContent = "y"
             
             workerDatesCell.appendChild(datek)
             workerDatesCell.appendChild(datev)
+
+            addOpts(0, listTypes.length, listTypes, datev)
         }
     }
 })

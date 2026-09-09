@@ -1,5 +1,14 @@
 package main
 
+import (
+	httpT "Go/http"
+	"fmt"
+	"net/http"
+)
+
 func main() {
-	connStr := "postgress://postgres:0604@localhost:5432/postgres"
+	http.HandleFunc("/hi", httpT.HandleClick)
+	http.ListenAndServe(":8080", nil)
+
+	fmt.Println("200")
 }

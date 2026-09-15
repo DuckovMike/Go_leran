@@ -7,69 +7,8 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func CreateTeamsTable(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	CREATE TABLE IF NOT EXISTS teams(
-		teamId SERIAL PRIMARY KEY,
-		name VARCHAR(100) NOT NULL
-	)
-	`
-
-	conn.Exec(ctx, sqlStr)
-}
-
-func CreateUsersTable(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	CREATE TABLE IF NOT EXISTS users(
-		userId SERIAL PRIMARY KEY,
-		teamId INTEGER NOT NULL REFERECNES teams(teamId) ON DELETE CASCADE,
-		fio VARCHAR(100) NOT NULL,
-		rate NUMERIC NOT NULL
-	);
-	`
-
-	conn.Exec(ctx, sqlStr)
-}
-
-func CreateAttandanceTable(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	CREATE TABLE IF NOT EXISTS attandance(
-		id SERIAL PRIMARY KEY,
-		userId INTEGER NOT NULL REFERECNES users(userId) ON DELETE CASCADE,
-		date DATE NOT NULL,
-		attandanceType INT NOT NULL
-	);
-	`
-
-	conn.Exec(ctx, sqlStr)
-}
-
-func ReadTeams(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	SELECT * FROM teams;
-	`
-
-	conn.Query(ctx, sqlStr)
-}
-
-func ReadUsers(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	SELECT * FROM users;
-	`
-	conn.Query(ctx, sqlStr)
-}
-
-func ReadAttandance(conn *pgx.Conn, ctx context.Context) {
-	sqlStr := `
-	SELECT * FROM attandance;
-	`
-	conn.Query(ctx, sqlStr)
-}
-
-func Connect() {
-	connStr := "postgress://postgres:0604@localhost:5432/postgres"
-
-	ctx := context.Background()
+func Connect(ctx context.Context) (*pgx.Conn, error) {
+	connStr := "postgres://postgres:0604@localhost:5432/postgres"
 
 	conn, err := pgx.Connect(ctx, connStr)
 
@@ -80,5 +19,35 @@ func Connect() {
 	if err = conn.Ping(ctx); err != nil {
 		log.Fatal("От Бд нет ответа:", err)
 	}
+	return conn, err
+}
 
+func CreateBaseAttandance(conn *pgx.Conn,
+	ctx context.Context,
+	startDate string,
+	endDate string) {
+
+	sqlStr := `
+	CREATE TABLE IF NOT EXISTS baseAttandance(
+		id SERIAL PRIMARY KEY,
+		date DATE NOT NULL UNIQUE,
+		attandanceType INT NOT NULL
+	);
+	`
+	_, err := conn.Exec(ctx, sqlStr)
+	if err != nil {
+		panic(err)
+	}
+
+	sqlStr = `
+	INSERT INTO baseAttandance(date, attandanceType)
+	SELECT 
+		d,
+		CASE WHEN EXTRACT(DOW FROM d) IN (0, 6) THEN 1 ELSE 0 END
+	FROM generate_series($1::date, $2::date, '1 day'::interval) AS d
+	`
+	_, err = conn.Exec(ctx, sqlStr, startDate, endDate)
+	if err != nil {
+		panic(err)
+	}
 }

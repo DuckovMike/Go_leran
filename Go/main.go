@@ -1,14 +1,31 @@
 package main
 
 import (
-	httpT "Go/http"
-	"fmt"
-	"net/http"
+	"Go/sql"
+	"context"
 )
 
 func main() {
-	http.HandleFunc("/hi", httpT.HandleClick)
-	http.ListenAndServe(":8080", nil)
+	ctx := context.Background()
+	conn, err := sql.Connect(ctx)
+	if err != nil {
+		panic(err)
+	}
 
-	fmt.Println("200")
+	/* 	sql.CreateUsersTable(conn, ctx)
+	   	sql.CreateAttandanceTable(conn, ctx)
+	   	sql.CreateUser(conn, ctx, "Team B", "John Doe", 1.0)
+	   	sql.CreateUser(conn, ctx, "Team A", "John Smith", 0.5)
+	   	sql.CreateUser(conn, ctx, "Team A", "John Do", 0.9)
+		 	resp, _ := sql.ReadUsersByTeam(conn, ctx, "Team A")
+
+	   	fmt.Println("Users in Team A:")
+
+	   	for i, user := range resp {
+	   		fmt.Printf("%d - %s (Rate: %.1f)\n", i, user.Fio, user.Rate)
+	   	}*/
+
+	sql.CreateAttandanceByUserTeamAndFio(conn, ctx, "Team A", "John Doe", "2026-01-02", 2)
+
+	defer conn.Close(ctx)
 }

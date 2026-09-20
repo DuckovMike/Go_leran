@@ -31,7 +31,8 @@ func CreateBaseAttandance(conn *pgx.Conn,
 	CREATE TABLE IF NOT EXISTS baseAttandance(
 		id SERIAL PRIMARY KEY,
 		date DATE NOT NULL UNIQUE,
-		attandanceType INT NOT NULL
+		attandanceType INT NOT NULL,
+		attandanceHours INT
 	);
 	`
 	_, err := conn.Exec(ctx, sqlStr)

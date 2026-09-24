@@ -29,14 +29,6 @@ func CreateAttandanceTable(conn *pgx.Conn, ctx context.Context) error {
 	return err
 }
 
-func ReadAttandanceByUserId(conn *pgx.Conn, ctx context.Context, userId int) {
-	sqlStr := `
-	SELECT * FROM attandance
-	WHERE userId = $1;
-	`
-	conn.Query(ctx, sqlStr, userId)
-}
-
 func UpdateAttandanceByUserT_F_D(
 	conn *pgx.Conn,
 	ctx context.Context,
@@ -49,8 +41,11 @@ func UpdateAttandanceByUserT_F_D(
 	sqlStr := `
 	UPDATE attandance 
 	SET attandanceType = $4, attandanceHours = $5
-	WHERE userId = (SELECT userId FROM users WHERE team = $1 AND fio = $2)
+	WHERE userId = (SELECT userId FROM users WHERE team = $1 AND fio = $2) AND date = $3
 	`
+
+	_, err := conn.Exec(ctx, sqlStr, team, fio, date, attandanceType, attandanceHours)
+	return err
 }
 
 func CreateAttandanceByUserT_F(
@@ -76,24 +71,61 @@ func CreateAttandanceByUserT_F(
 	return err
 }
 
-func ReadAttandanceByUserT_F(
+func ReadAttandanceByUserId(conn *pgx.Conn, ctx context.Context, userId int) {
+	sqlStr := `
+	SELECT * FROM attandance
+	WHERE userId = $1;
+	`
+	conn.Query(ctx, sqlStr, userId)
+}
+
+func ReadAttandanceByUserT_F_D(
 	conn *pgx.Conn,
 	ctx context.Context,
 	team string,
-	fio string) Attandance {
+	fio string,
+	date string) Attandance {
 	sqlStr := `
 	SELECT id, userId, date, attandanceType, attandanceHours
 	FROM attandance
-	WHERE userId = (SELECT userId FROM users WHERE team = $1 AND fio = $2)
+	WHERE userId = (SELECT userId FROM users WHERE team = $1 AND fio = $2) AND date = $3::date
 	`
 	var result Attandance
 
-	conn.QueryRow(ctx, sqlStr, team, fio).Scan(
+	conn.QueryRow(ctx, sqlStr, team, fio, date).Scan(
 		&result.Id,
 		&result.UserId,
 		&result.Date,
 		&result.AttandanceType,
 		&result.AttandanceHours)
+
+	return result
+}
+
+func ReadAttandanceByUserT_F(
+	conn *pgx.Conn,
+	ctx context.Context,
+	team string,
+	fio string,
+	date string) []Attandance {
+	sqlStr := `
+	SELECT id, userId, date, attandanceType, attandanceHours
+	FROM attandance
+	WHERE userId = (SELECT userId FROM users WHERE team = $1 AND fio = $2) AND date = $3::date
+	`
+	var result []Attandance
+
+	rows, err := conn.Query(ctx, sqlStr, team, fio, date)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		var att Attandance
+		rows.Scan(&att.Id, &att.UserId, &att.Date, &att.AttandanceType, &att.AttandanceHours)
+		result = append(result, att)
+	}
 
 	return result
 }
